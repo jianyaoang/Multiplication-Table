@@ -8,18 +8,38 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var multiplicationTable: UITableView!
+    @IBOutlet weak var valueSlider: UISlider!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        self.title = "Multiplication table"
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func onSliderDrag(sender: AnyObject) {
+        self.multiplicationTable.reloadData()
     }
 
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 12
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
+        
+        let value = Int(self.valueSlider.value * 20)
+        
+        cell.textLabel?.text = "\(value) * \(indexPath.row + 1) = \(value * (indexPath.row + 1))"
+        cell.textLabel?.textAlignment = NSTextAlignment.Center
+        
+        return cell
+        
+    }
 
 }
 
